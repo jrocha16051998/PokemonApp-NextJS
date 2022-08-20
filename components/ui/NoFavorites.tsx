@@ -12,7 +12,7 @@ export const NoFavorites = () => {
             justifyContent: 'center',
             alignSelf: 'center',
         }}>
-            <Text h3> Parace que aun no se pueden agregar favoritos </Text>
+            <Text h3> Parace que aun no hay favoritos, agrega uno para verlo aquí </Text>
             <Image 
                 src={'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/6.svg'} 
                 alt="Charizard"

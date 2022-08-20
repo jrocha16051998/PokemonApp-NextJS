@@ -60,15 +60,24 @@ export const PokemonPage: NextPage<Props> = ({pokemon}) => {
                 </Grid>
                 <Grid xs={ 12 } sm={ 8 } >
                     <Card>
-                        <Card.Header css={{ dispay: 'flex', justifyContent: 'space-between'}} >
+                        <Card.Header css={{ dispay: 'flex', justifyContent: 'space-between', flexWrap: 'wrap'}} >
                             <Text h1 transform='capitalize' > { pokemon.name }</Text>
+                            
                             <Button 
                                 color='gradient'   
                                 ghost={ !isInFavorites }
-                                onPress={onToggleFavorite}>
+                                onPress={onToggleFavorite}
+
+                            >
+                                
                                 { isInFavorites ? 'Eliminar de favoritos' : 'Guardar en favoritos'}
-                                    
+                                
                             </Button>
+
+                        
+                            
+                           
+                            
                         </Card.Header>
                         <Card.Body>
                             <Text size={30}>Sprites:  </Text>
@@ -116,7 +125,7 @@ export const getStaticPaths: GetStaticPaths = async (ctx) => {
         paths: pokemons151.map(id =>({
             params:{ id }
         })),
-        fallback: false
+        fallback: 'blocking'
     }
 }
 
@@ -124,12 +133,22 @@ export const getStaticProps: GetStaticProps  = async ({ params }) => {
   
     const { id } = params as { id: string }
 
+    const pokemon = await getPokemonInfo( id )
 
+    if( !pokemon ){
+        return{
+            redirect: {
+                destination: '/',
+                permanent: false
+            }
+        }
+    }
   
     return {
         props: {
-            pokemon: await getPokemonInfo( id )
-        }
+            pokemon
+        },
+        revalidate: 1000000
     }
 }
 
